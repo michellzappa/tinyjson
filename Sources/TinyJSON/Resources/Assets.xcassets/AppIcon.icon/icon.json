@@ -1,8 +1,8 @@
 {
   "fill" : {
     "linear-gradient" : [
-      "display-p3:1.00000,1.00000,1.00000,1.00000",
-      "srgb:0.36863,0.66667,0.65882,1.00000"
+      "srgb:0.36863,0.66667,0.65882,1.00000",
+      "srgb:0.25804,0.46667,0.46118,1.00000"
     ],
     "orientation" : {
       "start" : {
@@ -11,7 +11,7 @@
       },
       "stop" : {
         "x" : 0.5,
-        "y" : 0.7
+        "y" : 1
       }
     }
   },
@@ -20,8 +20,8 @@
       "layers" : [
         {
           "glass" : false,
-          "image-name" : "circle.png",
-          "name" : "circle",
+          "image-name" : "symbol.png",
+          "name" : "symbol",
           "position" : {
             "scale" : 2,
             "translation-in-points" : [
@@ -32,10 +32,10 @@
         },
         {
           "glass" : true,
-          "image-name" : "symbol.png",
-          "name" : "symbol",
+          "image-name" : "circle.png",
+          "name" : "circle",
           "position" : {
-            "scale" : 2,
+            "scale" : 2.2,
             "translation-in-points" : [
               0,
               0

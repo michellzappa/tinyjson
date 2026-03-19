@@ -5,40 +5,36 @@ import TinyKit
 struct TinyJSONApp: App {
     @State private var state = AppState()
     @State private var columnVisibility: NavigationSplitViewVisibility = .automatic
+    @State private var showWelcome = false
 
     var body: some Scene {
         WindowGroup {
-            Group {
-                if state.folderURL == nil && WelcomeState.isFirstLaunch {
-                    TinyWelcomeView(
-                        appName: "TinyJSON",
-                        subtitle: "A tiny JSON editor.",
-                        features: [
-                            (icon: "tree.fill", title: "Tree Preview", description: "Browse JSON as a collapsible tree"),
-                            (icon: "paintbrush", title: "Syntax Highlighting", description: "Color-coded keys, values, and types"),
-                            (icon: "doc.on.doc", title: "Tabs", description: "Edit multiple files at once"),
-                            (icon: "folder.badge.gearshape", title: "File Watcher", description: "Auto-reload on external changes"),
-                        ],
-                        onOpenFolder: {
-                            state.openFolder()
-                            WelcomeState.markLaunched()
-                        },
-                        onDismiss: {
-                            WelcomeState.markLaunched()
-                        }
-                    )
-                } else {
-                    ContentView(state: state, columnVisibility: $columnVisibility)
+            ContentView(state: state, columnVisibility: $columnVisibility)
+                .navigationTitle(state.selectedFile?.lastPathComponent ?? "TinyJSON")
+                .frame(minWidth: 600, minHeight: 400)
+                .onAppear {
+                    if WelcomeState.isFirstLaunch {
+                        showWelcome = true
+                    } else {
+                        state.restoreLastFolder()
+                    }
                 }
-            }
-            .navigationTitle(state.selectedFile?.lastPathComponent ?? "TinyJSON")
-            .frame(minWidth: 600, minHeight: 400)
-            .onAppear {
-                state.restoreLastFolder()
-            }
-            .onReceive(NotificationCenter.default.publisher(for: NSApplication.willTerminateNotification)) { _ in
-                state.saveAllDirtyTabs()
-            }
+                .onReceive(NotificationCenter.default.publisher(for: NSApplication.willTerminateNotification)) { _ in
+                    state.saveAllDirtyTabs()
+                }
+                .welcomeSheet(
+                    isPresented: $showWelcome,
+                    appName: "TinyJSON",
+                    subtitle: "A tiny JSON editor.",
+                    features: [
+                        (icon: "tree.fill", title: "Tree Preview", description: "Browse JSON as a collapsible tree"),
+                        (icon: "paintbrush", title: "Syntax Highlighting", description: "Color-coded keys, values, and types"),
+                        (icon: "doc.on.doc", title: "Tabs", description: "Edit multiple files at once"),
+                        (icon: "folder.badge.gearshape", title: "File Watcher", description: "Auto-reload on external changes"),
+                    ],
+                    onOpen: { state.openFolder() },
+                    onDismiss: { state.restoreLastFolder() }
+                )
         }
         .windowStyle(.titleBar)
         .windowToolbarStyle(.unified(showsTitle: true))
