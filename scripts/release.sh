@@ -41,7 +41,7 @@ APP_PATH="$INSTALL_ROOT/Applications/$APP_NAME.app"
 ZIP_PATH="/tmp/$APP_NAME-${VERSION}.zip"
 
 echo "==> Building $APP_NAME ${VERSION} (signed with Developer ID)..."
-rm -rf "$INSTALL_ROOT"
+rm -rf "$INSTALL_ROOT" "$BUILD_DIR"
 xcodebuild -project "$XCODEPROJ" \
     -scheme "$APP_NAME" \
     -configuration Release \
@@ -52,7 +52,12 @@ xcodebuild -project "$XCODEPROJ" \
     OTHER_CODE_SIGN_FLAGS="--options=runtime" \
     MARKETING_VERSION="$MARKETING_VERSION" \
     DSTROOT="$INSTALL_ROOT" \
-    install 2>&1 | tail -5
+    install 2>&1 | tee /tmp/${APP_NAME_LOWER}-build.log | grep -E "error:|warning:|SUCCEEDED|FAILED" | tail -20
+# Check for build failure
+if grep -q "BUILD FAILED\|** INSTALL FAILED" /tmp/${APP_NAME_LOWER}-build.log; then
+    echo "ERROR: Build failed. See /tmp/${APP_NAME_LOWER}-build.log"
+    exit 1
+fi
 
 if [[ ! -d "$APP_PATH" ]]; then
     echo "ERROR: Build failed — $APP_PATH not found"
