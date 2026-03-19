@@ -35,7 +35,8 @@ SIGN_IDENTITY="Developer ID Application: CENTAUR LABS OU (992N457T8D)"
 TEAM_ID="992N457T8D"
 
 BUILD_DIR="$PROJECT_DIR/.build/xcode"
-INSTALL_ROOT="/tmp/${APP_NAME,,}-release"
+APP_NAME_LOWER=$(echo "$APP_NAME" | tr '[:upper:]' '[:lower:]')
+INSTALL_ROOT="/tmp/${APP_NAME_LOWER}-release"
 APP_PATH="$INSTALL_ROOT/Applications/$APP_NAME.app"
 ZIP_PATH="/tmp/$APP_NAME-${VERSION}.zip"
 
