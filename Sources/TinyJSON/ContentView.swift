@@ -12,6 +12,8 @@ struct ContentView: View {
     @State private var eventMonitor: Any?
     @State private var jumpToRange: NSRange?
     @State private var treeExpanded = true
+    @State private var aiState = AIState()
+    @State private var editorBridge = EditorBridge()
 
     private var showPreview: Bool {
         previewUserPref && state.isJSONFile
@@ -99,12 +101,14 @@ struct ContentView: View {
                         shouldHighlight: state.isJSONFile,
                         highlighterProvider: { JSONHighlighter() },
                         commentStyle: .lineSlash,
-                        jumpToRange: $jumpToRange
+                        jumpToRange: $jumpToRange,
+                        editorBridge: editorBridge
                     )
                 }
 
                 StatusBarView(text: state.content)
             }
+            .modifier(CmdKOverlay(aiState: aiState, editorBridge: editorBridge, content: state.content, fileExtension: state.selectedFile?.pathExtension))
         }
         .onDisappear {
             if let monitor = eventMonitor {
@@ -151,6 +155,10 @@ struct ContentView: View {
                 }
                 if flags == .command && chars == "0" {
                     fontSize = 13
+                    return nil
+                }
+                if flags == .command && chars == "k" {
+                    aiState.activate(selection: editorBridge.currentSelection, range: editorBridge.currentSelectedRange, bridge: editorBridge, folderURL: state.folderURL, supportedExtensions: state.supportedExtensions)
                     return nil
                 }
                 if flags == .command && (chars == "f" || chars == "g") {

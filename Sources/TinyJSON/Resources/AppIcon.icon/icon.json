@@ -1,49 +1,45 @@
 {
-  "fill-specializations" : [
-    {
-      "value" : {
-        "linear-gradient" : [
-          "display-p3:1.00000,1.00000,1.00000,1.00000",
-          "display-p3:0.96078,0.61961,0.04314,1.00000"
-        ],
-        "orientation" : {
-          "start" : { "x" : 0.5, "y" : 0 },
-          "stop" : { "x" : 0.5, "y" : 1.0 }
-        }
-      }
-    },
-    {
-      "appearance" : "dark",
-      "value" : {
-        "linear-gradient" : [
-          "display-p3:0.48039,0.30980,0.02157,1.00000",
-          "display-p3:0.38431,0.24784,0.01725,1.00000"
-        ],
-        "orientation" : {
-          "start" : { "x" : 0.5, "y" : 0 },
-          "stop" : { "x" : 0.5, "y" : 1.0 }
-        }
+  "fill" : {
+    "linear-gradient" : [
+      "display-p3:1.00000,1.00000,1.00000,1.00000",
+      "srgb:0.36863,0.66667,0.65882,1.00000"
+    ],
+    "orientation" : {
+      "start" : {
+        "x" : 0.5,
+        "y" : 0
+      },
+      "stop" : {
+        "x" : 0.5,
+        "y" : 0.7
       }
     }
-  ],
+  },
   "groups" : [
     {
       "layers" : [
         {
-          "fill-specializations" : [
-            {
-              "appearance" : "dark",
-              "value" : {
-                "solid" : "extended-gray:1.00000,1.00000"
-              }
-            }
-          ],
           "glass" : false,
-          "image-name" : "glyph.png",
-          "name" : "glyph",
+          "image-name" : "symbol.png",
+          "name" : "symbol",
           "position" : {
-            "scale" : 1.0,
-            "translation-in-points" : [ 0, 0 ]
+            "scale" : 2,
+            "translation-in-points" : [
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "glass" : true,
+          "image-name" : "circle.png",
+          "name" : "circle",
+          "position" : {
+            "scale" : 2,
+            "translation-in-points" : [
+              0,
+              0
+            ]
           }
         }
       ],
@@ -58,7 +54,9 @@
     }
   ],
   "supported-platforms" : {
-    "circles" : [ "watchOS" ],
+    "circles" : [
+      "watchOS"
+    ],
     "squares" : "shared"
   }
 }

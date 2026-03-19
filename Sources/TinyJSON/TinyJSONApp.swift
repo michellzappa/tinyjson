@@ -63,5 +63,6 @@ struct TinyJSONApp: App {
                 .keyboardShortcut("s", modifiers: [.command, .control])
             }
         }
+
     }
 }
