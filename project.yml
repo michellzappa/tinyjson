@@ -30,12 +30,31 @@ targets:
             LSHandlerRank: Default
             LSItemContentTypes:
               - public.json
-              - public.plain-text
             CFBundleTypeExtensions:
               - json
+          - CFBundleTypeName: JSON Lines Document
+            CFBundleTypeRole: Editor
+            LSHandlerRank: Default
+            LSItemContentTypes:
+              - org.jsonlines.jsonl
+            CFBundleTypeExtensions:
               - jsonl
+              - ndjson
+          - CFBundleTypeName: GeoJSON Document
+            CFBundleTypeRole: Editor
+            LSHandlerRank: Default
+            LSItemContentTypes:
+              - org.geojson.geojson
+            CFBundleTypeExtensions:
               - geojson
+          - CFBundleTypeName: Plain Text
+            CFBundleTypeRole: Editor
+            LSHandlerRank: Alternate
+            LSItemContentTypes:
+              - public.plain-text
+            CFBundleTypeExtensions:
               - txt
+              - text
         LSApplicationCategoryType: public.app-category.productivity
         UTImportedTypeDeclarations:
           - UTTypeIdentifier: public.json
@@ -45,6 +64,21 @@ targets:
             UTTypeTagSpecification:
               public.filename-extension:
                 - json
+          - UTTypeIdentifier: org.jsonlines.jsonl
+            UTTypeDescription: JSON Lines Document
+            UTTypeConformsTo:
+              - public.plain-text
+            UTTypeTagSpecification:
+              public.filename-extension:
+                - jsonl
+                - ndjson
+          - UTTypeIdentifier: org.geojson.geojson
+            UTTypeDescription: GeoJSON Document
+            UTTypeConformsTo:
+              - public.json
+            UTTypeTagSpecification:
+              public.filename-extension:
+                - geojson
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.tinyjson.app
