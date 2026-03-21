@@ -5,6 +5,8 @@ A minimal, fast JSON editor for macOS.
 ![macOS](https://img.shields.io/badge/macOS-26%2B-blue)
 ![Swift](https://img.shields.io/badge/Swift-5.9-orange)
 
+![TinyJSON screenshot](screenshot.png)
+
 ## Features
 
 - **Three-panel layout** — file sidebar, editor, and tree preview
