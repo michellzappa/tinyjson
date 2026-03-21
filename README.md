@@ -62,6 +62,20 @@ cp -R /tmp/tinybuild/tinyjson/Build/Products/Release/TinyJSON.app /Applications/
 
 Built with SwiftUI, NSTextView, and TinyKit.
 
+## Part of [TinySuite](https://tinysuite.app)
+
+Native macOS micro-tools that each do one thing well.
+
+| App | What it does |
+|-----|-------------|
+| [TinyMark](https://github.com/michellzappa/tinymark) | Markdown editor with live preview |
+| [TinyTask](https://github.com/michellzappa/tinytask) | Plain-text task manager |
+| **TinyJSON** | JSON viewer with collapsible tree |
+| [TinyCSV](https://github.com/michellzappa/tinycsv) | Lightweight CSV/TSV table viewer |
+| [TinyPDF](https://github.com/michellzappa/tinypdf) | PDF text extractor with OCR |
+| [TinyLog](https://github.com/michellzappa/tinylog) | Log viewer with level filtering |
+| [TinySQL](https://github.com/michellzappa/tinysql) | Native PostgreSQL browser |
+
 ## License
 
 MIT

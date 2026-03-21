@@ -54,10 +54,22 @@ struct ContentView: View {
                                         .lineLimit(4)
                                         .textSelection(.enabled)
                                     Spacer()
+                                    if state.errorOffset != nil {
+                                        Image(systemName: "arrow.right.circle")
+                                            .foregroundStyle(.secondary)
+                                            .font(.caption)
+                                    }
                                 }
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 6)
                                 .background(.red.opacity(0.08))
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    if let offset = state.errorOffset {
+                                        jumpToRange = NSRange(location: offset, length: 0)
+                                    }
+                                }
+                                .help("Click to jump to error")
                                 Divider()
                             }
                             if let parsed = state.parsedJSON {

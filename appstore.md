@@ -3,7 +3,7 @@
 ## App Information
 
 - **App Name**: TinyJSON
-- **Subtitle** (30 chars max): A clean JSON editor & viewer
+- **Subtitle** (30 chars max): A fast JSON editor & viewer
 - **Bundle ID**: com.tinyjson.app
 - **SKU**: tinyjson-001
 - **Primary Language**: English (U.S.)
@@ -37,12 +37,15 @@ Features:
 - Multiple independent windows
 - Light and dark mode — follows your system
 - Opens .json, .jsonl, and .geojson files directly from Finder
+- On-device AI assistant (Cmd+K) — ask questions, transform, explain. Runs via CoreML, no API key required
 
 Built entirely with native macOS technologies. No Electron. No web views. Just SwiftUI and AppKit doing what they do best.
 
+Part of TinySuite — a family of native macOS micro-tools that each do one thing well. Every app is built around the file, not around itself. No accounts, no cloud, no lock-in. Open your file, understand it, act on it. Learn more at tinysuite.app.
+
 ### Keywords (100 chars max, comma-separated)
 
-json,editor,viewer,formatter,tree,validator,developer,api,data,geojson
+json,editor,viewer,formatter,tree,validator,developer,tinysuite,data,geojson
 
 ### What's New (Version 1.2.0)
 
@@ -58,14 +61,11 @@ https://github.com/michellzappa/tinyjson/issues
 
 ### Marketing URL (optional)
 
-https://github.com/michellzappa/tinyjson
+https://tinysuite.app
 
 ### Privacy Policy URL (required)
 
-<!-- You need a privacy policy URL even if the app collects no data. -->
-<!-- Example: https://michellzappa.github.io/tinyjson/privacy -->
-
-TODO: Create a simple privacy policy page stating the app collects no data.
+https://tinysuite.app/privacy.html
 
 ## Privacy Details
 
