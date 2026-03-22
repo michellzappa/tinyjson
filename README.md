@@ -1,6 +1,6 @@
 # TinyJSON
 
-A minimal, fast JSON editor for macOS.
+A native macOS JSON editor. Collapsible tree on one side, syntax-highlighted source on the other. Tells you exactly where it's broken.
 
 ![macOS](https://img.shields.io/badge/macOS-26%2B-blue)
 ![Swift](https://img.shields.io/badge/Swift-5.9-orange)

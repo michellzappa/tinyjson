@@ -1,6 +1,7 @@
 import SwiftUI
 import AppKit
 import TinyKit
+import UniformTypeIdentifiers
 
 // MARK: - FocusedValue key for per-window AppState
 
@@ -44,12 +45,29 @@ struct TinyJSONApp: App {
                 Button("Welcome to TinyJSON") {
                     NotificationCenter.default.post(name: .showWelcome, object: nil)
                 }
+                Divider()
+                Button("Feedback\u{2026}") {
+                    NSWorkspace.shared.open(URL(string: "https://tinysuite.app/support.html")!)
+                }
+                Button("TinySuite Website") {
+                    NSWorkspace.shared.open(URL(string: "https://tinysuite.app")!)
+                }
+            }
+
+            CommandGroup(replacing: .help) {
+                Button("TinyJSON on GitHub") {
+                    NSWorkspace.shared.open(URL(string: "https://github.com/michellzappa/tinyjson")!)
+                }
             }
 
             CommandGroup(after: .newItem) {
                 OpenFileButton()
 
                 OpenFolderButton()
+
+                RecentFilesMenu { url in
+                    activeState?.selectFile(url)
+                }
 
                 Divider()
 
@@ -98,6 +116,9 @@ struct WindowContentView: View {
 
     var body: some View {
         ContentView(state: state, columnVisibility: $columnVisibility)
+            .defaultAppBanner(appName: "TinyJSON", associations: [
+                FileTypeAssociation(utType: .json, label: ".json files"),
+            ])
             .navigationTitle(state.selectedFile?.lastPathComponent ?? "TinyJSON")
             .focusedSceneValue(\.appState, state)
             .onAppear {
@@ -124,14 +145,15 @@ struct WindowContentView: View {
             .welcomeSheet(
                 isPresented: $showWelcome,
                 appName: "TinyJSON",
-                subtitle: "A tiny JSON editor.",
+                subtitle: "A minimal, fast JSON editor for macOS.",
                 features: [
                     (icon: "tree.fill", title: "Tree Preview", description: "Browse JSON as a collapsible tree"),
                     (icon: "paintbrush", title: "Syntax Highlighting", description: "Color-coded keys, values, and types"),
                     (icon: "doc.on.doc", title: "Tabs", description: "Edit multiple files at once"),
                     (icon: "folder.badge.gearshape", title: "File Watcher", description: "Auto-reload on external changes"),
                 ],
-                onOpen: { state.openFolder() },
+                onOpenFolder: { state.openFolder() },
+                onOpenFile: { state.openFile() },
                 onDismiss: { state.restoreLastFolder() }
             )
             .background(WindowCloseGuard(state: state))

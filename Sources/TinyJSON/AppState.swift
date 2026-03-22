@@ -60,6 +60,108 @@ final class AppState: FileState {
         return try? JSONSerialization.jsonObject(with: data, options: [.fragmentsAllowed])
     }
 
+    /// Warnings from lenient parsing (e.g. "Stripped 3 comments", "Removed trailing commas").
+    var jsonWarnings: [String] = []
+
+    /// Attempt lenient parsing: fix common issues and return whatever we can.
+    /// Sets `jsonWarnings` with descriptions of what was repaired.
+    var lenientParsedJSON: Any? {
+        guard !content.isEmpty else {
+            jsonWarnings = []
+            return nil
+        }
+        if isJSONL { return parsedJSONLines }
+
+        // If strict parsing works, no warnings needed
+        if let data = content.data(using: .utf8),
+           let obj = try? JSONSerialization.jsonObject(with: data, options: [.fragmentsAllowed]) {
+            jsonWarnings = []
+            return obj
+        }
+
+        // Try to repair
+        var warnings: [String] = []
+        var text = content
+
+        // 1. Strip BOM
+        if text.hasPrefix("\u{FEFF}") {
+            text.removeFirst()
+            warnings.append("Stripped BOM")
+        }
+
+        // 2. Strip comments (// and /* */) outside of strings
+        let (stripped, commentCount) = Self.stripComments(from: text)
+        if commentCount > 0 {
+            text = stripped
+            warnings.append("Stripped \(commentCount) comment\(commentCount == 1 ? "" : "s")")
+        }
+
+        // 4. Remove trailing commas before } or ]
+        let trailingCommaPattern = #",\s*([}\]])"#
+        if let regex = try? NSRegularExpression(pattern: trailingCommaPattern),
+           regex.numberOfMatches(in: text, range: NSRange(text.startIndex..., in: text)) > 0 {
+            let count = regex.numberOfMatches(in: text, range: NSRange(text.startIndex..., in: text))
+            text = regex.stringByReplacingMatches(in: text, range: NSRange(text.startIndex..., in: text), withTemplate: "$1")
+            warnings.append("Removed \(count) trailing comma\(count == 1 ? "" : "s")")
+        }
+
+        // 5. Replace single-quoted strings with double-quoted
+        // Simple heuristic: only outside of double-quoted strings
+        let singleQuoteCount = text.filter { $0 == "'" }.count
+        if singleQuoteCount >= 2 {
+            var result = ""
+            var inDouble = false
+            var prev: Character = "\0"
+            for ch in text {
+                if ch == "\"" && prev != "\\" {
+                    inDouble.toggle()
+                    result.append(ch)
+                } else if ch == "'" && !inDouble && prev != "\\" {
+                    result.append("\"")
+                } else {
+                    result.append(ch)
+                }
+                prev = ch
+            }
+            if result != text {
+                text = result
+                warnings.append("Replaced single quotes with double quotes")
+            }
+        }
+
+        // Try parsing the repaired text
+        if let data = text.data(using: .utf8),
+           let obj = try? JSONSerialization.jsonObject(with: data, options: [.fragmentsAllowed]) {
+            jsonWarnings = warnings
+            return obj
+        }
+
+        // 6. Last resort: try wrapping bare values, or try as JSONL
+        // Try parsing line-by-line as if it were JSONL
+        let lines = text.components(separatedBy: "\n").filter { !$0.trimmingCharacters(in: .whitespaces).isEmpty }
+        if lines.count > 1 {
+            var results: [Any] = []
+            var badCount = 0
+            for line in lines {
+                let trimmed = line.trimmingCharacters(in: .whitespaces)
+                if let data = trimmed.data(using: .utf8),
+                   let obj = try? JSONSerialization.jsonObject(with: data, options: [.fragmentsAllowed]) {
+                    results.append(obj)
+                } else {
+                    badCount += 1
+                }
+            }
+            if !results.isEmpty {
+                warnings.append("Parsed as line-delimited JSON (\(results.count) valid, \(badCount) invalid line\(badCount == 1 ? "" : "s"))")
+                jsonWarnings = warnings
+                return results
+            }
+        }
+
+        jsonWarnings = warnings.isEmpty ? [] : warnings
+        return nil
+    }
+
     /// Parse JSONL: each non-empty line is an independent JSON value.
     /// Returns an array of all successfully parsed lines.
     private var parsedJSONLines: Any? {
@@ -278,5 +380,79 @@ final class AppState: FileState {
         if formatted != content {
             content = formatted
         }
+    }
+
+    // MARK: - Comment stripping (string-aware)
+
+    /// Strip // and /* */ comments that are outside of JSON strings.
+    /// Returns the cleaned text and the number of comments removed.
+    static func stripComments(from text: String) -> (String, Int) {
+        var result = ""
+        result.reserveCapacity(text.count)
+        var count = 0
+        var i = text.startIndex
+
+        while i < text.endIndex {
+            let ch = text[i]
+
+            // Skip over strings (preserve their content)
+            if ch == "\"" {
+                result.append(ch)
+                i = text.index(after: i)
+                while i < text.endIndex {
+                    let sc = text[i]
+                    result.append(sc)
+                    if sc == "\\" {
+                        i = text.index(after: i)
+                        if i < text.endIndex {
+                            result.append(text[i])
+                            i = text.index(after: i)
+                        }
+                    } else if sc == "\"" {
+                        i = text.index(after: i)
+                        break
+                    } else {
+                        i = text.index(after: i)
+                    }
+                }
+                continue
+            }
+
+            // Check for single-line comment
+            let next = text.index(after: i)
+            if ch == "/" && next < text.endIndex && text[next] == "/" {
+                count += 1
+                // Skip to end of line
+                var j = next
+                while j < text.endIndex && text[j] != "\n" {
+                    j = text.index(after: j)
+                }
+                i = j // leave the \n
+                continue
+            }
+
+            // Check for block comment
+            if ch == "/" && next < text.endIndex && text[next] == "*" {
+                count += 1
+                var j = text.index(next, offsetBy: 1, limitedBy: text.endIndex) ?? text.endIndex
+                while j < text.endIndex {
+                    if text[j] == "*" {
+                        let afterStar = text.index(after: j)
+                        if afterStar < text.endIndex && text[afterStar] == "/" {
+                            i = text.index(after: afterStar)
+                            break
+                        }
+                    }
+                    j = text.index(after: j)
+                }
+                if j >= text.endIndex { i = text.endIndex }
+                continue
+            }
+
+            result.append(ch)
+            i = text.index(after: i)
+        }
+
+        return (result, count)
     }
 }

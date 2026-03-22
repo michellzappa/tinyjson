@@ -1,11 +1,21 @@
 import SwiftUI
 import TinyKit
 
+enum PreviewMode: String, CaseIterable, Identifiable {
+    case tree = "Tree"
+    case table = "Table"
+    case stats = "Stats"
+    case columns = "Columns"
+
+    var id: Self { self }
+}
+
 struct ContentView: View {
     @Bindable var state: AppState
     @Binding var columnVisibility: NavigationSplitViewVisibility
     @AppStorage("wordWrap") private var wordWrap = false
     @AppStorage("previewUserPref") private var previewUserPref = true
+    @AppStorage("previewMode") private var previewMode: PreviewMode = .tree
     @AppStorage("fontSize") private var fontSize: Double = 13
     @AppStorage("showLineNumbers") private var showLineNumbers = false
     @State private var showQuickOpen = false
@@ -72,32 +82,74 @@ struct ContentView: View {
                                 .help("Click to jump to error")
                                 Divider()
                             }
-                            if let parsed = state.parsedJSON {
-                                VStack(spacing: 0) {
-                                    // Expand/Collapse toolbar
-                                    HStack(spacing: 8) {
-                                        Button {
-                                            treeExpanded = true
-                                        } label: {
-                                            Label("Expand All", systemImage: "arrow.down.right.and.arrow.up.left")
-                                                .font(.caption)
-                                        }
-                                        .buttonStyle(.borderless)
-                                        .disabled(treeExpanded)
-                                        Button {
-                                            treeExpanded = false
-                                        } label: {
-                                            Label("Collapse All", systemImage: "arrow.up.left.and.arrow.down.right")
-                                                .font(.caption)
-                                        }
-                                        .buttonStyle(.borderless)
-                                        .disabled(!treeExpanded)
-                                        Spacer()
+                            // Lenient warning banner
+                            if state.parsedJSON == nil && !state.jsonWarnings.isEmpty {
+                                HStack(alignment: .top, spacing: 6) {
+                                    Image(systemName: "exclamationmark.triangle.fill")
+                                        .foregroundStyle(.orange)
+                                        .padding(.top, 1)
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text("Showing repaired preview")
+                                            .font(.system(size: 11, weight: .medium))
+                                            .foregroundStyle(.primary)
+                                        Text(state.jsonWarnings.joined(separator: " · "))
+                                            .font(.system(size: 10, design: .monospaced))
+                                            .foregroundStyle(.secondary)
+                                            .lineLimit(2)
                                     }
-                                    .padding(.horizontal, 8)
-                                    .padding(.vertical, 4)
-                                    Divider()
+                                    Spacer()
+                                }
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 5)
+                                .background(.orange.opacity(0.08))
+                                Divider()
+                            }
+
+                            // Mode picker + tree controls
+                            HStack(spacing: 8) {
+                                Picker("", selection: $previewMode) {
+                                    ForEach(PreviewMode.allCases, id: \.self) { mode in
+                                        Text(mode.rawValue).tag(mode)
+                                    }
+                                }
+                                .pickerStyle(.segmented)
+                                .fixedSize()
+
+                                if previewMode == .tree {
+                                    Button {
+                                        treeExpanded = true
+                                    } label: {
+                                        Label("Expand All", systemImage: "arrow.down.right.and.arrow.up.left")
+                                            .font(.caption)
+                                    }
+                                    .buttonStyle(.borderless)
+                                    .disabled(treeExpanded)
+                                    Button {
+                                        treeExpanded = false
+                                    } label: {
+                                        Label("Collapse All", systemImage: "arrow.up.left.and.arrow.down.right")
+                                            .font(.caption)
+                                    }
+                                    .buttonStyle(.borderless)
+                                    .disabled(!treeExpanded)
+                                }
+                                Spacer()
+                            }
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            Divider()
+
+                            // Preview content
+                            if let parsed = state.parsedJSON ?? state.lenientParsedJSON {
+                                switch previewMode {
+                                case .tree:
                                     JSONTreeView(rootNode: JSONNode.from(parsed), expandAll: treeExpanded)
+                                case .table:
+                                    JSONTableView(parsedJSON: parsed)
+                                case .stats:
+                                    JSONStatsView(parsedJSON: parsed, characterCount: state.content.count)
+                                case .columns:
+                                    JSONColumnBrowserView(parsedJSON: parsed)
                                 }
                             } else {
                                 ContentUnavailableView("No Valid JSON", systemImage: "curlybraces", description: Text("Edit the file to see the tree preview"))
@@ -205,7 +257,7 @@ struct ContentView: View {
                     } label: {
                         Image(systemName: previewUserPref ? "rectangle.righthalf.filled" : "rectangle.righthalf.inset.filled")
                     }
-                    .help("Toggle Tree Preview (\u{2325}P)")
+                    .help("Toggle Preview (\u{2325}P)")
                     Button {
                         state.formatJSON()
                     } label: {

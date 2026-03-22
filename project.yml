@@ -21,6 +21,8 @@ targets:
         buildPhase: resources
       - path: Sources/TinyJSON/Resources/AppIcon.icon
         buildPhase: resources
+      - path: Sources/TinyJSON/Resources/DocIcons
+        buildPhase: resources
     info:
       path: Sources/TinyJSON/Info.plist
       properties:
@@ -28,6 +30,7 @@ targets:
           - CFBundleTypeName: JSON Document
             CFBundleTypeRole: Editor
             LSHandlerRank: Default
+            CFBundleTypeIconFile: doc_json
             LSItemContentTypes:
               - public.json
             CFBundleTypeExtensions:
