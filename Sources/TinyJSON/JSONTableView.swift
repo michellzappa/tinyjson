@@ -3,24 +3,87 @@ import AppKit
 
 struct JSONTableView: View {
     let parsedJSON: Any
+    @State private var selectedKey: String?
 
     var body: some View {
-        if let array = asArrayOfObjects {
+        if let array = directArrayOfObjects {
             JSONTableNSView(objects: array)
+        } else if !nestedArrayKeys.isEmpty {
+            VStack(spacing: 0) {
+                if nestedArrayKeys.count > 1 {
+                    HStack(spacing: 6) {
+                        Text("Array:")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        Picker("", selection: $selectedKey) {
+                            ForEach(nestedArrayKeys, id: \.self) { key in
+                                Text("\(key) (\(nestedArrayCount(for: key)))")
+                                    .tag(Optional(key))
+                            }
+                        }
+                        .labelsHidden()
+                        .pickerStyle(.segmented)
+                        .controlSize(.small)
+                        Spacer()
+                    }
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    Divider()
+                }
+                if let key = effectiveKey, let objects = nestedArray(for: key) {
+                    JSONTableNSView(objects: objects)
+                }
+            }
+            .onAppear { selectedKey = bestNestedKey }
         } else {
             ContentUnavailableView(
                 "Table view requires an array of objects",
                 systemImage: "tablecells",
-                description: Text("The current JSON is not an array of objects")
+                description: Text("The current JSON is not an array of objects.\nFor root objects, at least one value must be an array of objects.")
             )
         }
     }
 
-    private var asArrayOfObjects: [[String: Any]]? {
+    // Root is directly an array of objects
+    private var directArrayOfObjects: [[String: Any]]? {
         guard let arr = parsedJSON as? [Any] else { return nil }
         let dicts = arr.compactMap { $0 as? [String: Any] }
         guard !dicts.isEmpty else { return nil }
         return dicts
+    }
+
+    // Root is an object — find keys whose values are arrays of objects
+    private var nestedArrayKeys: [String] {
+        guard let root = parsedJSON as? [String: Any] else { return [] }
+        return root.keys.sorted().filter { key in
+            guard let arr = root[key] as? [Any] else { return false }
+            return !arr.compactMap({ $0 as? [String: Any] }).isEmpty
+        }
+    }
+
+    // Pick the largest array as default
+    private var bestNestedKey: String? {
+        guard let root = parsedJSON as? [String: Any] else { return nil }
+        return nestedArrayKeys.max(by: { a, b in
+            (root[a] as? [Any])?.count ?? 0 < (root[b] as? [Any])?.count ?? 0
+        })
+    }
+
+    private var effectiveKey: String? {
+        selectedKey ?? bestNestedKey
+    }
+
+    private func nestedArray(for key: String) -> [[String: Any]]? {
+        guard let root = parsedJSON as? [String: Any],
+              let arr = root[key] as? [Any] else { return nil }
+        let dicts = arr.compactMap { $0 as? [String: Any] }
+        return dicts.isEmpty ? nil : dicts
+    }
+
+    private func nestedArrayCount(for key: String) -> Int {
+        guard let root = parsedJSON as? [String: Any],
+              let arr = root[key] as? [Any] else { return 0 }
+        return arr.compactMap { $0 as? [String: Any] }.count
     }
 }
 
