@@ -19,8 +19,16 @@ struct JSONColumnBrowserView: NSViewRepresentable {
         stack.orientation = .horizontal
         stack.spacing = 0
         stack.alignment = .top
+        stack.translatesAutoresizingMaskIntoConstraints = false
 
         scrollView.documentView = stack
+
+        // Pin stack height to clip view so columns fill available vertical space
+        NSLayoutConstraint.activate([
+            stack.topAnchor.constraint(equalTo: scrollView.contentView.topAnchor),
+            stack.bottomAnchor.constraint(equalTo: scrollView.contentView.bottomAnchor),
+        ])
+
         context.coordinator.scrollView = scrollView
         context.coordinator.stackView = stack
         context.coordinator.setRoot(parsedJSON)
