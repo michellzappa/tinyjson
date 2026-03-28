@@ -1,0 +1,17 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Build TinyJSON
+        run: xcodebuild clean build -project TinyJSON.xcodeproj -scheme TinyJSON -configuration Release -derivedDataPath /tmp/tinybuild/tinyjson CODE_SIGN_IDENTITY="-"

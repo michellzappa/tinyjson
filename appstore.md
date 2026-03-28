@@ -12,7 +12,7 @@
 - **Content Rights**: Does not contain third-party content
 - **Age Rating**: 4+
 
-## Version 1.2.0
+## Version 1.3.0
 
 ### Description (4000 chars max)
 
@@ -47,9 +47,9 @@ Part of TinySuite — a family of native macOS micro-tools that each do one thin
 
 json,editor,viewer,formatter,tree,validator,developer,tinysuite,data,geojson
 
-### What's New (Version 1.2.0)
+### What's New (Version 1.3.0)
 
-Notarized release with Developer ID signing.
+Improved Cmd+K selection handling in split view and updated shared file, bookmark, and AI context handling.
 
 ### Promotional Text (170 chars max, can be updated without review)
 

@@ -49,7 +49,8 @@ struct ContentView: View {
                             shouldHighlight: state.isJSONFile,
                             highlighterProvider: { JSONHighlighter() },
                             commentStyle: .lineSlash,
-                            jumpToRange: $jumpToRange
+                            jumpToRange: $jumpToRange,
+                            editorBridge: editorBridge
                         )
                     } right: {
                         VStack(spacing: 0) {
