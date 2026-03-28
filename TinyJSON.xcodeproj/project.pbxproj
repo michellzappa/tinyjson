@@ -1,0 +1,427 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		056B0877B6D402463ED86E30 /* JSONStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D9FA4D7D64A89C63582EBD /* JSONStatsView.swift */; };
+		195123470BD20560BC2D9854 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 677DF6F6DC1588270AB5BB81 /* AppIcon.icon */; };
+		4140B04A0017EC9BA0850ABB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 843B8D4B97735590C801E1E4 /* Assets.xcassets */; };
+		60EB3157470288BCA1FFA982 /* TinyKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB9D35C49CEADBE388A63D97 /* TinyKit */; };
+		867163BAD43E380ABE148017 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74CF1E40CC826EBE41EBA77 /* AppState.swift */; };
+		9AF59D4F38F18ACE745024C5 /* JSONHighlighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F15BF12754F4FA0BF22A /* JSONHighlighter.swift */; };
+		C6CA92378ADE10FB8B686E43 /* doc_json.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4F2F3D1F5194B00EE13BA948 /* doc_json.icns */; };
+		C717D395301A01474CEE13B5 /* JSONColumnBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319A49F7BBC068EE78BD4FF4 /* JSONColumnBrowserView.swift */; };
+		ED0505F7ED1D18D2782EEC54 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AD4B74EEDD177B360589AE /* ContentView.swift */; };
+		F0FE5CFC90355A727E099181 /* TinyJSONApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6C42B8BA4E9C614988BBB57 /* TinyJSONApp.swift */; };
+		FD5F854B0EF1F8D201340AED /* JSONTreeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C54E3F22573D841784CE1E /* JSONTreeView.swift */; };
+		FEE4CB686ADDB177B0B0A254 /* JSONTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFFA4CAA04BA376809CFE28 /* JSONTableView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2DC0CC888ACD74B2E9FB5A1C /* TinyJSON.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinyJSON.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		319A49F7BBC068EE78BD4FF4 /* JSONColumnBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONColumnBrowserView.swift; sourceTree = "<group>"; };
+		43D9FA4D7D64A89C63582EBD /* JSONStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONStatsView.swift; sourceTree = "<group>"; };
+		4F2F3D1F5194B00EE13BA948 /* doc_json.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = doc_json.icns; sourceTree = "<group>"; };
+		677DF6F6DC1588270AB5BB81 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = AppIcon.icon; sourceTree = "<group>"; };
+		78A14F255F00F75417621D03 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		78C54E3F22573D841784CE1E /* JSONTreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONTreeView.swift; sourceTree = "<group>"; };
+		83AD4B74EEDD177B360589AE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		843B8D4B97735590C801E1E4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A5C7F15BF12754F4FA0BF22A /* JSONHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONHighlighter.swift; sourceTree = "<group>"; };
+		C6C42B8BA4E9C614988BBB57 /* TinyJSONApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinyJSONApp.swift; sourceTree = "<group>"; };
+		C74CF1E40CC826EBE41EBA77 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		DCFFA4CAA04BA376809CFE28 /* JSONTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONTableView.swift; sourceTree = "<group>"; };
+		ECAABC21675405C22182AC4F /* TinyKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TinyKit; path = Packages/TinyKit; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		07CA6A937A07DF5D715BA67F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				60EB3157470288BCA1FFA982 /* TinyKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		24CB4EE5D6CE48EE0B4BD9DC /* DocIcons */ = {
+			isa = PBXGroup;
+			children = (
+				4F2F3D1F5194B00EE13BA948 /* doc_json.icns */,
+			);
+			name = DocIcons;
+			path = Sources/TinyJSON/Resources/DocIcons;
+			sourceTree = "<group>";
+		};
+		4D8B0D58F61E3CB4F9B946F4 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				ECAABC21675405C22182AC4F /* TinyKit */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		553D8E2023823D982923A6F4 = {
+			isa = PBXGroup;
+			children = (
+				24CB4EE5D6CE48EE0B4BD9DC /* DocIcons */,
+				4D8B0D58F61E3CB4F9B946F4 /* Packages */,
+				BF1CD5A00863FAD152565FE4 /* Resources */,
+				BD3FF7C88D92447CDF5C8F73 /* TinyJSON */,
+				A72D800253A05B2E12802D41 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A72D800253A05B2E12802D41 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2DC0CC888ACD74B2E9FB5A1C /* TinyJSON.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BD3FF7C88D92447CDF5C8F73 /* TinyJSON */ = {
+			isa = PBXGroup;
+			children = (
+				C74CF1E40CC826EBE41EBA77 /* AppState.swift */,
+				83AD4B74EEDD177B360589AE /* ContentView.swift */,
+				78A14F255F00F75417621D03 /* Info.plist */,
+				319A49F7BBC068EE78BD4FF4 /* JSONColumnBrowserView.swift */,
+				A5C7F15BF12754F4FA0BF22A /* JSONHighlighter.swift */,
+				43D9FA4D7D64A89C63582EBD /* JSONStatsView.swift */,
+				DCFFA4CAA04BA376809CFE28 /* JSONTableView.swift */,
+				78C54E3F22573D841784CE1E /* JSONTreeView.swift */,
+				C6C42B8BA4E9C614988BBB57 /* TinyJSONApp.swift */,
+			);
+			name = TinyJSON;
+			path = Sources/TinyJSON;
+			sourceTree = "<group>";
+		};
+		BF1CD5A00863FAD152565FE4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				677DF6F6DC1588270AB5BB81 /* AppIcon.icon */,
+				843B8D4B97735590C801E1E4 /* Assets.xcassets */,
+			);
+			name = Resources;
+			path = Sources/TinyJSON/Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		30A55F6372707C454AA4E23E /* TinyJSON */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2F0A6906491E1419645E6759 /* Build configuration list for PBXNativeTarget "TinyJSON" */;
+			buildPhases = (
+				C3C06184DA305AD5F54B2EFD /* Sources */,
+				AFC833A18616411DF5F986AF /* Resources */,
+				07CA6A937A07DF5D715BA67F /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TinyJSON;
+			packageProductDependencies = (
+				BB9D35C49CEADBE388A63D97 /* TinyKit */,
+			);
+			productName = TinyJSON;
+			productReference = 2DC0CC888ACD74B2E9FB5A1C /* TinyJSON.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		68DAEC95187EA4BBDA5C96C3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					30A55F6372707C454AA4E23E = {
+						DevelopmentTeam = 992N457T8D;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = F7E743AB3231C05B67122083 /* Build configuration list for PBXProject "TinyJSON" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 553D8E2023823D982923A6F4;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				FD48E36E905E296C650912D4 /* XCLocalSwiftPackageReference "Packages/TinyKit" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = A72D800253A05B2E12802D41 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				30A55F6372707C454AA4E23E /* TinyJSON */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AFC833A18616411DF5F986AF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				195123470BD20560BC2D9854 /* AppIcon.icon in Resources */,
+				4140B04A0017EC9BA0850ABB /* Assets.xcassets in Resources */,
+				C6CA92378ADE10FB8B686E43 /* doc_json.icns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C3C06184DA305AD5F54B2EFD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				867163BAD43E380ABE148017 /* AppState.swift in Sources */,
+				ED0505F7ED1D18D2782EEC54 /* ContentView.swift in Sources */,
+				C717D395301A01474CEE13B5 /* JSONColumnBrowserView.swift in Sources */,
+				9AF59D4F38F18ACE745024C5 /* JSONHighlighter.swift in Sources */,
+				056B0877B6D402463ED86E30 /* JSONStatsView.swift in Sources */,
+				FEE4CB686ADDB177B0B0A254 /* JSONTableView.swift in Sources */,
+				FD5F854B0EF1F8D201340AED /* JSONTreeView.swift in Sources */,
+				F0FE5CFC90355A727E099181 /* TinyJSONApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		18E185EF8A0383767FF6B324 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = TinyJSON.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 992N457T8D;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = Sources/TinyJSON/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = /Applications;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.3.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tinyjson.app;
+				PRODUCT_NAME = TinyJSON;
+				SDKROOT = macosx;
+				SKIP_INSTALL = NO;
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		3DB33268F790CEB61D2A32FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		5268F55B8A925DE0A053DB93 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		A01055654CAB7FCEC432EAD2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				CODE_SIGN_ENTITLEMENTS = TinyJSON.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 992N457T8D;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = Sources/TinyJSON/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = /Applications;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.3.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tinyjson.app;
+				PRODUCT_NAME = TinyJSON;
+				SDKROOT = macosx;
+				SKIP_INSTALL = NO;
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2F0A6906491E1419645E6759 /* Build configuration list for PBXNativeTarget "TinyJSON" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A01055654CAB7FCEC432EAD2 /* Debug */,
+				18E185EF8A0383767FF6B324 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F7E743AB3231C05B67122083 /* Build configuration list for PBXProject "TinyJSON" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5268F55B8A925DE0A053DB93 /* Debug */,
+				3DB33268F790CEB61D2A32FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		FD48E36E905E296C650912D4 /* XCLocalSwiftPackageReference "Packages/TinyKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/TinyKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		BB9D35C49CEADBE388A63D97 /* TinyKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TinyKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 68DAEC95187EA4BBDA5C96C3 /* Project object */;
+}

@@ -105,3 +105,9 @@ targets:
     dependencies:
       - package: TinyKit
         product: TinyKit
+
+schemes:
+  TinyJSON:
+    build:
+      targets:
+        TinyJSON: all
