@@ -2,7 +2,7 @@ name: TinyJSON
 options:
   bundleIdPrefix: com.tinyjson
   deploymentTarget:
-    macOS: "26.0"
+    macOS: "15.0"
   xcodeVersion: "16.0"
 
 packages:
@@ -96,7 +96,7 @@ targets:
         INFOPLIST_KEY_LSApplicationCategoryType: "public.app-category.productivity"
         INFOPLIST_KEY_NSHumanReadableCopyright: ""
         SWIFT_VERSION: "5.9"
-        MACOSX_DEPLOYMENT_TARGET: "26.0"
+        MACOSX_DEPLOYMENT_TARGET: "15.0"
         DEVELOPMENT_TEAM: 992N457T8D
         CODE_SIGN_STYLE: Automatic
         CODE_SIGN_IDENTITY: "Apple Development"
