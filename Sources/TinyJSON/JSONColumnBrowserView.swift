@@ -81,6 +81,9 @@ struct JSONColumnBrowserView: NSViewRepresentable {
                 let textField = NSTextField(labelWithString: "")
                 textField.font = .monospacedSystemFont(ofSize: 12, weight: .regular)
                 textField.lineBreakMode = .byTruncatingTail
+                textField.maximumNumberOfLines = 1
+                textField.cell?.wraps = false
+                textField.cell?.isScrollable = false
                 textField.translatesAutoresizingMaskIntoConstraints = false
 
                 let chevron = NSImageView()
@@ -112,20 +115,12 @@ struct JSONColumnBrowserView: NSViewRepresentable {
             let baseFont = NSFont.monospacedSystemFont(ofSize: 12, weight: .regular)
             let boldFont = NSFont.monospacedSystemFont(ofSize: 12, weight: .medium)
 
-            // Label (key name or array index)
+            // Label (key name or array index) — Finder-style: just the name
             attributed.append(NSAttributedString(string: entry.label, attributes: [
                 .font: boldFont, .foregroundColor: keyColor,
             ]))
 
-            if entry.isLeaf {
-                // Leaf: show value inline after label
-                attributed.append(NSAttributedString(string: ": ", attributes: [
-                    .font: baseFont, .foregroundColor: NSColor.secondaryLabelColor,
-                ]))
-                attributed.append(NSAttributedString(string: Helpers.summaryString(entry.value), attributes: [
-                    .font: baseFont, .foregroundColor: Helpers.leafColor(entry.value),
-                ]))
-            } else {
+            if !entry.isLeaf {
                 // Container: show count summary
                 attributed.append(NSAttributedString(string: "  \(Helpers.summaryString(entry.value))", attributes: [
                     .font: baseFont, .foregroundColor: NSColor.tertiaryLabelColor,
@@ -135,14 +130,10 @@ struct JSONColumnBrowserView: NSViewRepresentable {
             cell.textField?.attributedStringValue = attributed
             cell.textField?.toolTip = "\(entry.label): \(Helpers.summaryString(entry.value))"
 
-            // Chevron for expandable entries
+            // Chevron — all entries are drillable (leaves show their value in the next column)
             let chevron = cell.subviews.compactMap { $0 as? NSImageView }.first
-            if !entry.isLeaf {
-                chevron?.image = NSImage(systemSymbolName: "chevron.right", accessibilityDescription: nil)
-                chevron?.contentTintColor = .tertiaryLabelColor
-            } else {
-                chevron?.image = nil
-            }
+            chevron?.image = NSImage(systemSymbolName: "chevron.right", accessibilityDescription: nil)
+            chevron?.contentTintColor = entry.isLeaf ? .quaternaryLabelColor : .tertiaryLabelColor
 
             return cell
         }

@@ -15,5 +15,11 @@ jobs:
           submodules: recursive
       - name: Show Xcode version
         run: xcodebuild -version
+      - name: Install XcodeGen
+        run: |
+          brew list xcodegen >/dev/null 2>&1 || HOMEBREW_NO_AUTO_UPDATE=1 brew install xcodegen
+          xcodegen --version
+      - name: Generate Xcode project
+        run: xcodegen generate --spec project.yml
       - name: Build TinyJSON
         run: xcodebuild clean build -project TinyJSON.xcodeproj -scheme TinyJSON -configuration Release -derivedDataPath /tmp/tinybuild/tinyjson CODE_SIGN_IDENTITY="-"

@@ -34,6 +34,8 @@ A native macOS JSON editor. Collapsible tree on one side, syntax-highlighted sou
 ## Build
 
 ```bash
+xcodegen generate --spec project.yml
+
 xcodebuild clean build \
   -project TinyJSON.xcodeproj \
   -scheme TinyJSON \
@@ -41,7 +43,9 @@ xcodebuild clean build \
   -derivedDataPath /tmp/tinybuild/tinyjson \
   CODE_SIGN_IDENTITY="-"
 
+rm -rf /Applications/TinyJSON.app
 cp -R /tmp/tinybuild/tinyjson/Build/Products/Release/TinyJSON.app /Applications/
+xattr -cr /Applications/TinyJSON.app
 ```
 
 ## Keyboard Shortcuts

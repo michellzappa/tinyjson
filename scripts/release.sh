@@ -19,14 +19,14 @@ VERSION="${1:?Usage: release.sh <version-tag> [--skip-notarize]}"
 SKIP_NOTARIZE=false
 [[ "${2:-}" == "--skip-notarize" ]] && SKIP_NOTARIZE=true
 
-# Auto-detect app name from .xcodeproj
 PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-XCODEPROJ=$(ls -d "$PROJECT_DIR"/*.xcodeproj 2>/dev/null | head -1)
-if [[ -z "$XCODEPROJ" ]]; then
-    echo "ERROR: No .xcodeproj found in $PROJECT_DIR"
+PROJECT_SPEC="$PROJECT_DIR/project.yml"
+APP_NAME=$(sed -n 's/^name:[[:space:]]*//p' "$PROJECT_SPEC" | head -1)
+if [[ -z "$APP_NAME" ]]; then
+    echo "ERROR: Could not determine app name from $PROJECT_SPEC"
     exit 1
 fi
-APP_NAME=$(basename "$XCODEPROJ" .xcodeproj)
+XCODEPROJ="$PROJECT_DIR/$APP_NAME.xcodeproj"
 
 # Strip leading 'v' for the marketing version (v1.1.0 → 1.1.0)
 MARKETING_VERSION="${VERSION#v}"
@@ -34,11 +34,32 @@ MARKETING_VERSION="${VERSION#v}"
 SIGN_IDENTITY="Developer ID Application: CENTAUR LABS OU (992N457T8D)"
 TEAM_ID="992N457T8D"
 
-BUILD_DIR="$PROJECT_DIR/.build/xcode"
 APP_NAME_LOWER=$(echo "$APP_NAME" | tr '[:upper:]' '[:lower:]')
+BUILD_DIR="/tmp/tinybuild/${APP_NAME_LOWER}-release"
 INSTALL_ROOT="/tmp/${APP_NAME_LOWER}-release"
 APP_PATH="$INSTALL_ROOT/Applications/$APP_NAME.app"
+BINARY_PATH="$APP_PATH/Contents/MacOS/$APP_NAME"
 ZIP_PATH="/tmp/$APP_NAME-${VERSION}.zip"
+BUILD_LOG="/tmp/${APP_NAME_LOWER}-build.log"
+
+if ! command -v xcodegen >/dev/null 2>&1; then
+    echo "ERROR: xcodegen is required. Install it with: brew install xcodegen"
+    exit 1
+fi
+
+if [[ ! -f "$PROJECT_SPEC" ]]; then
+    echo "ERROR: Missing $PROJECT_SPEC"
+    exit 1
+fi
+
+echo "==> Generating Xcode project from project.yml..."
+rm -rf "$XCODEPROJ"
+(cd "$PROJECT_DIR" && xcodegen generate --spec "$PROJECT_SPEC")
+
+if [[ ! -d "$XCODEPROJ" ]]; then
+    echo "ERROR: xcodegen failed to create $XCODEPROJ"
+    exit 1
+fi
 
 echo "==> Building $APP_NAME ${VERSION} (signed with Developer ID)..."
 rm -rf "$INSTALL_ROOT" "$BUILD_DIR"
@@ -52,15 +73,16 @@ xcodebuild -project "$XCODEPROJ" \
     OTHER_CODE_SIGN_FLAGS="--options=runtime" \
     MARKETING_VERSION="$MARKETING_VERSION" \
     DSTROOT="$INSTALL_ROOT" \
-    install 2>&1 | tee /tmp/${APP_NAME_LOWER}-build.log | grep -E "error:|warning:|SUCCEEDED|FAILED" | tail -20
-# Check for build failure
-if grep -q "BUILD FAILED\|** INSTALL FAILED" /tmp/${APP_NAME_LOWER}-build.log; then
-    echo "ERROR: Build failed. See /tmp/${APP_NAME_LOWER}-build.log"
-    exit 1
-fi
+    clean install 2>&1 | tee "$BUILD_LOG"
+grep -E "error:|warning:|SUCCEEDED|FAILED" "$BUILD_LOG" | tail -20 || true
 
 if [[ ! -d "$APP_PATH" ]]; then
     echo "ERROR: Build failed — $APP_PATH not found"
+    exit 1
+fi
+
+if [[ ! -x "$BINARY_PATH" ]]; then
+    echo "ERROR: Build failed — executable not found at $BINARY_PATH"
     exit 1
 fi
 
