@@ -5,8 +5,9 @@ set -euo pipefail
 # Builds, signs, notarizes, and publishes to GitHub Releases.
 #
 # Usage:
-#   ./scripts/release.sh v1.0.0                  # build + notarize + GitHub release
-#   ./scripts/release.sh v1.0.0 --skip-notarize  # build + GitHub release (no notarization)
+#   ./scripts/release.sh v1.0.0                               # build + notarize + GitHub release
+#   ./scripts/release.sh v1.0.0 --skip-notarize               # build + GitHub release (no notarization)
+#   ./scripts/release.sh v1.0.0 --skip-notarize --dry-run     # validate build/sign/package without publishing
 #
 # Prerequisites:
 #   - Xcode command line tools
@@ -15,9 +16,20 @@ set -euo pipefail
 #       xcrun notarytool store-credentials "notarize" \
 #         --apple-id "mz@centaur-labs.io" --team-id "992N457T8D" --password "APP_SPECIFIC_PW"
 
-VERSION="${1:?Usage: release.sh <version-tag> [--skip-notarize]}"
+VERSION="${1:?Usage: release.sh <version-tag> [--skip-notarize] [--dry-run]}"
 SKIP_NOTARIZE=false
-[[ "${2:-}" == "--skip-notarize" ]] && SKIP_NOTARIZE=true
+DRY_RUN=false
+
+for arg in "${@:2}"; do
+    case "$arg" in
+        --skip-notarize) SKIP_NOTARIZE=true ;;
+        --dry-run) DRY_RUN=true ;;
+        *)
+            echo "ERROR: Unknown option: $arg"
+            exit 1
+            ;;
+    esac
+done
 
 PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 PROJECT_SPEC="$PROJECT_DIR/project.yml"
@@ -94,7 +106,7 @@ codesign --verify --deep --strict "$APP_PATH"
 echo "    Signature OK"
 
 # Notarize unless skipped
-if ! $SKIP_NOTARIZE; then
+if ! $SKIP_NOTARIZE && ! $DRY_RUN; then
     echo "==> Creating zip for notarization..."
     ditto -c -k --keepParent "$APP_PATH" "$ZIP_PATH"
 
@@ -106,8 +118,14 @@ if ! $SKIP_NOTARIZE; then
     echo "==> Stapling notarization ticket..."
     xcrun stapler staple "$APP_PATH"
 
+    echo "==> Verifying Gatekeeper assessment..."
+    spctl --assess --type execute "$APP_PATH"
+    echo "    Gatekeeper OK"
+
     # Re-zip with stapled ticket
     rm -f "$ZIP_PATH"
+else
+    echo "==> Skipping Gatekeeper assessment because notarization is disabled."
 fi
 
 echo "==> Creating distribution zip..."
@@ -115,6 +133,13 @@ ditto -c -k --keepParent "$APP_PATH" "$ZIP_PATH"
 
 SIZE=$(du -h "$ZIP_PATH" | cut -f1)
 echo "    $ZIP_PATH ($SIZE)"
+
+if $DRY_RUN; then
+    echo "==> Dry run complete. Build, signing, and packaging checks passed."
+    rm -f "$ZIP_PATH"
+    rm -rf "$INSTALL_ROOT"
+    exit 0
+fi
 
 # Create GitHub release
 echo "==> Publishing GitHub release ${VERSION}..."

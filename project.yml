@@ -2,7 +2,7 @@ name: TinyJSON
 options:
   bundleIdPrefix: com.tinyjson
   deploymentTarget:
-    macOS: "15.0"
+    macOS: "26.0"
   xcodeVersion: "16.0"
 
 packages:
@@ -96,7 +96,7 @@ targets:
         INFOPLIST_KEY_LSApplicationCategoryType: "public.app-category.productivity"
         INFOPLIST_KEY_NSHumanReadableCopyright: ""
         SWIFT_VERSION: "5.9"
-        MACOSX_DEPLOYMENT_TARGET: "15.0"
+        MACOSX_DEPLOYMENT_TARGET: "26.0"
         DEVELOPMENT_TEAM: 992N457T8D
         CODE_SIGN_STYLE: Automatic
         CODE_SIGN_IDENTITY: "Apple Development"
@@ -107,9 +107,24 @@ targets:
     dependencies:
       - package: TinyKit
         product: TinyKit
+  TinyJSONUITests:
+    type: bundle.ui-testing
+    platform: macOS
+    sources:
+      - path: UITests/TinyJSONUITests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.tinyjson.app.uitests
+        TEST_TARGET_NAME: TinyJSON
+        GENERATE_INFOPLIST_FILE: YES
+    dependencies:
+      - target: TinyJSON
 
 schemes:
   TinyJSON:
     build:
       targets:
         TinyJSON: all
+    test:
+      targets:
+        - name: TinyJSONUITests

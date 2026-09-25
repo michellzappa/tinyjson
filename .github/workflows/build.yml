@@ -1,10 +1,15 @@
-name: Build
+name: CI
 
 on:
+  pull_request:
   push:
     branches:
       - main
-  pull_request:
+    tags:
+      - "v*"
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
 
 jobs:
   build:
@@ -19,7 +24,41 @@ jobs:
         run: |
           brew list xcodegen >/dev/null 2>&1 || HOMEBREW_NO_AUTO_UPDATE=1 brew install xcodegen
           xcodegen --version
-      - name: Generate Xcode project
-        run: xcodegen generate --spec project.yml
-      - name: Build TinyJSON
-        run: xcodebuild clean build -project TinyJSON.xcodeproj -scheme TinyJSON -configuration Release -derivedDataPath /tmp/tinybuild/tinyjson CODE_SIGN_IDENTITY="-"
+      - name: Run unit tests and clean build
+        run: Packages/TinyKit/scripts/ci/run_unit_and_build.sh TinyJSON "$PWD"
+
+  ui_smoke:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Show Xcode version
+        run: xcodebuild -version
+      - name: Install XcodeGen
+        run: |
+          brew list xcodegen >/dev/null 2>&1 || HOMEBREW_NO_AUTO_UPDATE=1 brew install xcodegen
+          xcodegen --version
+      - name: Run UI smoke test
+        run: Packages/TinyKit/scripts/ci/run_ui_smoke.sh TinyJSON UITests/Fixtures/sample.json "$PWD"
+
+  release_validation:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs:
+      - build
+      - ui_smoke
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Show Xcode version
+        run: xcodebuild -version
+      - name: Install XcodeGen
+        run: |
+          brew list xcodegen >/dev/null 2>&1 || HOMEBREW_NO_AUTO_UPDATE=1 brew install xcodegen
+          xcodegen --version
+      - name: Validate release pipeline
+        run: Packages/TinyKit/scripts/ci/run_release_validation.sh TinyJSON "${GITHUB_REF_NAME}" "$PWD"

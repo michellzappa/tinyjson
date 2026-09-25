@@ -29,6 +29,20 @@ struct ContentView: View {
         previewUserPref && state.isJSONFile
     }
 
+    private var uiSmokeStatus: String {
+        let fileName = state.selectedFile?.lastPathComponent ?? "no-file"
+        if let error = state.jsonError {
+            return "\(fileName) error:\(error.replacingOccurrences(of: "\n", with: " "))"
+        }
+        if let array = (state.parsedJSON ?? state.lenientParsedJSON) as? [Any] {
+            return "\(fileName) parsed:\(array.count)"
+        }
+        if state.parsedJSON ?? state.lenientParsedJSON != nil {
+            return "\(fileName) parsed:1"
+        }
+        return "\(fileName) parsed:0"
+    }
+
     var body: some View {
         NavigationSplitView(columnVisibility: $columnVisibility) {
             TinyFileList(state: state)
@@ -174,6 +188,9 @@ struct ContentView: View {
                 StatusBarView(text: state.content)
             }
             .modifier(CmdKOverlay(aiState: aiState, editorBridge: editorBridge, content: state.content, fileExtension: state.selectedFile?.pathExtension))
+        }
+        .overlay(alignment: .bottomTrailing) {
+            TinyUITestProbe(text: uiSmokeStatus)
         }
         .onDisappear {
             if let monitor = eventMonitor {

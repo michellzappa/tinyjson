@@ -122,7 +122,9 @@ struct WindowContentView: View {
             .navigationTitle(state.selectedFile?.lastPathComponent ?? "TinyJSON")
             .focusedSceneValue(\.appState, state)
             .onAppear {
-                if !TinyAppDelegate.pendingFiles.isEmpty {
+                if let fixture = TinyRuntime.fixtureURL {
+                    openFiles([fixture])
+                } else if !TinyAppDelegate.pendingFiles.isEmpty {
                     let files = TinyAppDelegate.pendingFiles
                     TinyAppDelegate.pendingFiles.removeAll()
                     openFiles(files)

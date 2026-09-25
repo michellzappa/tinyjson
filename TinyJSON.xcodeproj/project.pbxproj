@@ -13,6 +13,7 @@
 		60EB3157470288BCA1FFA982 /* TinyKit in Frameworks */ = {isa = PBXBuildFile; productRef = BB9D35C49CEADBE388A63D97 /* TinyKit */; };
 		867163BAD43E380ABE148017 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74CF1E40CC826EBE41EBA77 /* AppState.swift */; };
 		9AF59D4F38F18ACE745024C5 /* JSONHighlighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C7F15BF12754F4FA0BF22A /* JSONHighlighter.swift */; };
+		B993AA788E52CDF06E0229AB /* TinyJSONUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549860055BA219413939BA2E /* TinyJSONUITests.swift */; };
 		C6CA92378ADE10FB8B686E43 /* doc_json.icns in Resources */ = {isa = PBXBuildFile; fileRef = 4F2F3D1F5194B00EE13BA948 /* doc_json.icns */; };
 		C717D395301A01474CEE13B5 /* JSONColumnBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 319A49F7BBC068EE78BD4FF4 /* JSONColumnBrowserView.swift */; };
 		ED0505F7ED1D18D2782EEC54 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83AD4B74EEDD177B360589AE /* ContentView.swift */; };
@@ -21,16 +22,28 @@
 		FEE4CB686ADDB177B0B0A254 /* JSONTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFFA4CAA04BA376809CFE28 /* JSONTableView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		121FF0970281E300CD27076C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 68DAEC95187EA4BBDA5C96C3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 30A55F6372707C454AA4E23E;
+			remoteInfo = TinyJSON;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		2DC0CC888ACD74B2E9FB5A1C /* TinyJSON.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinyJSON.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		319A49F7BBC068EE78BD4FF4 /* JSONColumnBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONColumnBrowserView.swift; sourceTree = "<group>"; };
 		43D9FA4D7D64A89C63582EBD /* JSONStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONStatsView.swift; sourceTree = "<group>"; };
 		4F2F3D1F5194B00EE13BA948 /* doc_json.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = doc_json.icns; sourceTree = "<group>"; };
+		549860055BA219413939BA2E /* TinyJSONUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinyJSONUITests.swift; sourceTree = "<group>"; };
 		677DF6F6DC1588270AB5BB81 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		78A14F255F00F75417621D03 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		78C54E3F22573D841784CE1E /* JSONTreeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONTreeView.swift; sourceTree = "<group>"; };
 		83AD4B74EEDD177B360589AE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		843B8D4B97735590C801E1E4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		881EB78744074C53B07EE818 /* TinyJSONUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TinyJSONUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5C7F15BF12754F4FA0BF22A /* JSONHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONHighlighter.swift; sourceTree = "<group>"; };
 		C6C42B8BA4E9C614988BBB57 /* TinyJSONApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TinyJSONApp.swift; sourceTree = "<group>"; };
 		C74CF1E40CC826EBE41EBA77 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
@@ -74,14 +87,25 @@
 				4D8B0D58F61E3CB4F9B946F4 /* Packages */,
 				BF1CD5A00863FAD152565FE4 /* Resources */,
 				BD3FF7C88D92447CDF5C8F73 /* TinyJSON */,
+				606D2AEBD0104174AE528039 /* TinyJSONUITests */,
 				A72D800253A05B2E12802D41 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		606D2AEBD0104174AE528039 /* TinyJSONUITests */ = {
+			isa = PBXGroup;
+			children = (
+				549860055BA219413939BA2E /* TinyJSONUITests.swift */,
+			);
+			name = TinyJSONUITests;
+			path = UITests/TinyJSONUITests;
 			sourceTree = "<group>";
 		};
 		A72D800253A05B2E12802D41 /* Products */ = {
 			isa = PBXGroup;
 			children = (
 				2DC0CC888ACD74B2E9FB5A1C /* TinyJSON.app */,
+				881EB78744074C53B07EE818 /* TinyJSONUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -136,6 +160,24 @@
 			productReference = 2DC0CC888ACD74B2E9FB5A1C /* TinyJSON.app */;
 			productType = "com.apple.product-type.application";
 		};
+		C4339D1BA3F1A0D1ECB883A1 /* TinyJSONUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DDBB1D4FBE041482EDBFEE6E /* Build configuration list for PBXNativeTarget "TinyJSONUITests" */;
+			buildPhases = (
+				F7411920FB02DAA056D327BA /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6F083CC79D774B0625B7B092 /* PBXTargetDependency */,
+			);
+			name = TinyJSONUITests;
+			packageProductDependencies = (
+			);
+			productName = TinyJSONUITests;
+			productReference = 881EB78744074C53B07EE818 /* TinyJSONUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -148,6 +190,9 @@
 					30A55F6372707C454AA4E23E = {
 						DevelopmentTeam = 992N457T8D;
 						ProvisioningStyle = Automatic;
+					};
+					C4339D1BA3F1A0D1ECB883A1 = {
+						TestTargetID = 30A55F6372707C454AA4E23E;
 					};
 				};
 			};
@@ -169,6 +214,7 @@
 			projectRoot = "";
 			targets = (
 				30A55F6372707C454AA4E23E /* TinyJSON */,
+				C4339D1BA3F1A0D1ECB883A1 /* TinyJSONUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -202,7 +248,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F7411920FB02DAA056D327BA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B993AA788E52CDF06E0229AB /* TinyJSONUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6F083CC79D774B0625B7B092 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 30A55F6372707C454AA4E23E /* TinyJSON */;
+			targetProxy = 121FF0970281E300CD27076C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		18E185EF8A0383767FF6B324 /* Release */ = {
@@ -226,7 +288,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tinyjson.app;
 				PRODUCT_NAME = TinyJSON;
@@ -281,7 +343,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -291,6 +353,23 @@
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
+		};
+		50653F3C67E540B30981D66B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tinyjson.app.uitests;
+				SDKROOT = macosx;
+				TEST_TARGET_NAME = TinyJSON;
+			};
+			name = Debug;
 		};
 		5268F55B8A925DE0A053DB93 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -343,7 +422,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -376,7 +455,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.tinyjson.app;
 				PRODUCT_NAME = TinyJSON;
@@ -386,6 +465,23 @@
 			};
 			name = Debug;
 		};
+		F4FB363186917AF53926F3A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tinyjson.app.uitests;
+				SDKROOT = macosx;
+				TEST_TARGET_NAME = TinyJSON;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -394,6 +490,15 @@
 			buildConfigurations = (
 				A01055654CAB7FCEC432EAD2 /* Debug */,
 				18E185EF8A0383767FF6B324 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		DDBB1D4FBE041482EDBFEE6E /* Build configuration list for PBXNativeTarget "TinyJSONUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50653F3C67E540B30981D66B /* Debug */,
+				F4FB363186917AF53926F3A8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

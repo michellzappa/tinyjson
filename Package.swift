@@ -12,7 +12,12 @@ let package = Package(
             name: "TinyJSON",
             dependencies: ["TinyKit"],
             path: "Sources/TinyJSON",
-            exclude: ["Resources"],
+            exclude: ["Resources", "Info.plist"],
+            swiftSettings: [.swiftLanguageMode(.v5)]
+        ),
+        .testTarget(
+            name: "TinyJSONTests",
+            dependencies: ["TinyJSON"],
             swiftSettings: [.swiftLanguageMode(.v5)]
         ),
     ]
